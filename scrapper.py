@@ -1,5 +1,9 @@
 import re
 import unicodedata
+import ssl
+import os
+import errno
+import requests
 
 import nltk
 from nltk.corpus import stopwords
@@ -37,12 +41,28 @@ def clean_collected(images: list):
             print(image)
 
 
+def download_images(images, out_path='./data'):
+    if not os.path.exists(out_path):
+        try:
+            os.makedirs(out_path)
+        except OSError as exc: # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
+
+    for i, image in enumerate(images):
+        with open(os.path.join(out_path, f'{i}.jpg'), 'wb') as imfile:
+            response = requests.get(image['src']).content
+
+            imfile.write(response)
+
+
 if __name__ == '__main__':
+    context = ssl.SSLContext()
     data = list()
 
-    for i in trange(10):
+    for i in trange(1):
         try:
-            html = urlopen(f'https://www.freepik.com/search?dates=any&format=search&page={i}&query=tattoo+sketch')
+            html = urlopen(f'https://www.freepik.com/search?dates=any&format=search&page={i}&query=tattoo+sketch', context=context)
         except HTTPError as error:
             print(f'Page number {i} doesnt exist!!')
             break
@@ -50,14 +70,17 @@ if __name__ == '__main__':
         images = bs.find_all('img', {'src':re.compile('.jpg')})
         data.extend(images)
 
-    print(len(data))
+    print('all images', len(data))
     clean_list = list()
     for i in data:
         if 'set' not in i['alt'].lower() and 'collection' not in i['alt'].lower() and 'template' not in i['alt'].lower():
             clean_list.append(i)
 
-    print(len(clean_list))
+    print('clean images', len(clean_list))
+
+    download_images(clean_list)
     # clean_collected(images)
     # for image in images:
     #     print(image)
     #     print(image['src']+'\n')
+
