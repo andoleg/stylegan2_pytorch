@@ -832,6 +832,7 @@ def get_trainer(args):
         trainer = stylegan2.train.Trainer.load_checkpoint(
             args.checkpoint_dir,
             dataset,
+            resume_opt=False,
             device=args.gpu,
             rank=args.rank,
             world_size=args.world_size,

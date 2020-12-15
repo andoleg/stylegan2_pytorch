@@ -845,7 +845,7 @@ class Trainer:
             models.save(self.Gs, os.path.join(dir_path, 'Gs.pth'))
 
     @classmethod
-    def load_checkpoint(cls, checkpoint_path, dataset, **kwargs):
+    def load_checkpoint(cls, checkpoint_path, dataset, resume_opt=True, **kwargs):
         """
         Load a checkpoint into a new Trainer object and return that
         object. If the path specified points at a folder containing
@@ -856,6 +856,7 @@ class Trainer:
             checkpoint_path (str): Path to a checkpoint or to a folder
                 containing one or more checkpoints.
             dataset (indexable): The dataset to use.
+            resume_opt (bool): Whether load state_dict to optimizers (True) or not (False)
             **kwargs (keyword arguments): Any other arguments to override
                 the ones saved in the checkpoint. Useful for when training
                 is continued on a different device or when distributed training
@@ -879,10 +880,14 @@ class Trainer:
                     else torch.device(loaded_kwargs['Gs_device'])
             )
         obj = cls(dataset=dataset, **loaded_kwargs)
-        for name in ['G_opt', 'D_opt']:
-            fpath = os.path.join(checkpoint_path, name + '.pth')
-            state_dict = torch.load(fpath, map_location=device)
-            getattr(obj, name).load_state_dict(state_dict)
+        if resume_opt:
+            for name in ['G_opt', 'D_opt']:
+                fpath = os.path.join(checkpoint_path, name + '.pth')
+                state_dict = torch.load(fpath, map_location=device)
+                getattr(obj, name).load_state_dict(state_dict)
+        else:
+            obj.G_opt = build_opt(obj.G, 'Adam', {'lr': 2e-3, 'betas': (0, 0.99)}, obj.G_reg, obj.G_reg_interval)
+            obj.D_opt = build_opt(obj.D, 'Adam', {'lr': 2e-3, 'betas': (0, 0.99)}, obj.D_reg, obj.D_reg_interval)
         return obj
 
 
