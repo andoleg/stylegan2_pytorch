@@ -60,7 +60,7 @@ if __name__ == '__main__':
     context = ssl.SSLContext()
     data = list()
 
-    for i in trange(1):
+    for i in trange(1000):
         try:
             html = urlopen(f'https://www.freepik.com/search?dates=any&format=search&page={i}&query=tattoo+sketch', context=context)
         except HTTPError as error:

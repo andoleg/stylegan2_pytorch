@@ -64,6 +64,7 @@ if __name__ == '__main__':
 			cv2.imshow(imagefile, cv2.imread(os.path.join(args.dir, imagefile)))
 			k = cv2.waitKey(0)
 			if k == 27:  # esc
+				print('esc clicked: exiting')
 				break
 			elif k in keys:
 				shutil.copyfile(os.path.join(args.dir, imagefile), os.path.join(keys[k]['dir'], imagefile))

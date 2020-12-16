@@ -680,6 +680,14 @@ def get_arg_parser():
         metavar='WORKERS'
     )
 
+    parser.add_argument(
+        '--resume_opt',
+        help='Whether load state_dict to optimizers (True) or not (False). Default: True',
+        default=True,
+        type=bool,
+        metavar='BOOL'
+    )
+
     #----------------------------------------------------------------------------
     # Logging options
 
@@ -832,6 +840,9 @@ def get_trainer(args):
         trainer = stylegan2.train.Trainer.load_checkpoint(
             args.checkpoint_dir,
             dataset,
+            resume_opt=args.resume_opt,
+            G_opt_kwargs={'lr': args.g_lr, 'betas': args.g_betas},
+            D_opt_kwargs={'lr': args.d_lr, 'betas': args.d_betas},
             device=args.gpu,
             rank=args.rank,
             world_size=args.world_size,
