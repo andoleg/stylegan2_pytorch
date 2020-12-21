@@ -74,6 +74,16 @@ def get_arg_parser():
         metavar='VALUE'
     )
 
+    parser.add_argument(
+        '--animation_frame_size',
+        help='Filename of animated interpolation',
+        type=tuple,
+        default=(512, 512),
+        metavar='VALUE'
+    )
+
+
+
     _add_shared_arguments(parser)
 
     return parser
@@ -131,7 +141,7 @@ def interpolate(G, args):
                                        fourcc=fourcc_,
                                        fps=args.animation_fps,
                                        apiPreference=cv2.CAP_ANY,
-                                       frameSize=(512,512))
+                                       frameSize=args.animation_frame_size)
 
     for seed in args.seeds:
         for i, (latent, noise_tensors) in enumerate(interpolate_generator(seed, args.interpolation_step)):
