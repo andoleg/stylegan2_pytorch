@@ -67,7 +67,7 @@ if __name__ == '__main__':
             print(f'Page number {i} doesnt exist!!')
             break
         bs = BeautifulSoup(html, 'html.parser')
-        images = bs.find_all('img', {'src':re.compile('.jpg')})
+        images = bs.find_all('img', {'src': re.compile('.jpg')})
         data.extend(images)
 
     print('all images', len(data))

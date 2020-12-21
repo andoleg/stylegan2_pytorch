@@ -329,28 +329,6 @@ def generate_images(G, args):
             img.save(os.path.join(args.output, 'seed%04d.png' % seed))
             progress.step()
 
-    # if noise_tensors is not None:
-    #     G.static_noise(noise_tensors=noise_tensors)
-    # def gen_l():
-    #     latents = list()
-    #     rnd = np.random.RandomState(1)
-    #     latents.append(torch.from_numpy(rnd.randn(latent_size)))
-    #     return latents
-    # latents = gen_l()
-    # for i in range(10):
-    #     latents = torch.stack(latents, dim=0).to(device=device, dtype=torch.float32)
-    #     with torch.no_grad():
-    #         generated = G(latents, labels=None)
-    #     images = utils.tensor_to_PIL(
-    #         generated, pixel_min=args.pixel_min, pixel_max=args.pixel_max)
-    #     for seed, img in zip(args.seeds[i: i + args.batch_size], images):
-    #         img.save(os.path.join(args.output, f'{i}.png'))
-    #         progress.step()
-    #
-    #     latents = list(map(lambda x: x**2, latents.numpy()))
-    #     latents[0] = torch.from_numpy(latents[0])
-
-
 
     progress.write('Done!', step=False)
     progress.close()

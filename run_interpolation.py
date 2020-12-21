@@ -126,7 +126,7 @@ def interpolate(G, args):
     progress.write('Generating images...', step=False)
 
     if args.interpolation_step:
-        fourcc_ = cv2.VideoWriter_fourcc(*'MP4V')
+        fourcc_ = cv2.VideoWriter_fourcc(*'avc1')
         video_writer = cv2.VideoWriter(filename=os.path.join(args.output, args.animation_filename),
                                        fourcc=fourcc_,
                                        fps=args.animation_fps,
