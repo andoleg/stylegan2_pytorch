@@ -1,3 +1,46 @@
+## Tattoo Generation Porject
+### About
+This is an art project aimed to generate tattoo sketches. Project is based on PyTorch Implementation of StyleGAN2.
+
+### Participants
+Developed by Innopolis University students:
+* [Andriyanchenko Oleg](https://github.com/andoleg)
+* [Daniel Ginzburg](https://github.com/thedownhill)
+
+### Dataset
+Dataset was scrapped from [freepik.com](freepik.com) using custom written scrapper (`./scrapper.py`). It was partially cleaned during scrapping using image tag words. Final revision and cleaning was done by hand with following criteria:
+* Tattoo unrelated image
+* Multiple sketches on a single image
+* Text on image
+
+Overall around ~3.6k images were gathered initially and ~2.6 images remained after cleaning.
+Link to dataset: [Google Drive](https://drive.google.com/file/d/1Dxv_ZZyilD7zeSHe0zFHdoIoWdogSRd-/view?usp=sharing)
+
+### Training
+Training was done on 16Gb Tesla V100 GPU. We trained 2 main models:
+* Generator that outputs 512x512 images with initial latent vector of size 512
+* Generator that outputs 128x128 images with initial latent vector of size 512
+
+Trained models can be accessed here (Link will appear in near future).
+
+### Results
+Generated 512x512 images:\
+<img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/6_0.png" width="400"/> <img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/18_0.png" width="400"/> 
+
+### Interpolation Between Generated Images
+For convenience, we created a script (`run_interpolation.py`) that allows you to create interpolation frames between different images. Script allows to create a video of smooth interpolation over created images.
+Arguments are the same as in `run_generator.py` plus:
+* `animate_interpolation` - write a video if `True`
+* `animation_filename` - filename to output video
+* `animation_fps` - fps of the video
+* `animation_frame_size` - frame size of images written to video
+
+Example of running the script:
+`python --network=../path/to/Gs.pth --seeds=1-2 --truncation_psi=1.0 --output ./interpolated --animate_interpolation True`
+
+Our resulted interpolation over generated tattoo sketches: [Google Drive](https://drive.google.com/file/d/1Sdv8WRpIAJSeD8ZHJELqfKOCFunb8Bl3/view?usp=sharing)
+
+# StyleGAN2 readme.md
 ## StyleGAN2 &mdash; Pytorch Implementation
 ### About
 This is an unofficial port of the StyleGAN2 architecture and training procedure from [the official Tensorflow implementation](https://github.com/NVlabs/stylegan2) to Pytorch. Pretrained Tensorflow models can be converted into Pytorch models.
