@@ -25,7 +25,7 @@ Trained models can be accessed here (Link will appear in near future).
 
 ### Results
 Generated 512x512 images:\
-<img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/6_0.png" width="450"/> <img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/18_0.png" width="450"/> 
+<img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/6_0.png" width="400"/> <img src="https://github.com/andoleg/stylegan2_pytorch/blob/master/results_generated/18_0.png" width="400"/> 
 
 ### Interpolation Between Generated Images
 For convenience, we created a script (`run_interpolation.py`) that allows you to create interpolation frames between different images. Script allows to create a video of smooth interpolation over created images.
