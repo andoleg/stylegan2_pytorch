@@ -21,7 +21,7 @@ Training was done on 16Gb Tesla V100 GPU. We trained 2 main models:
 * Generator that outputs 512x512 images with initial latent vector of size 512
 * Generator that outputs 128x128 images with initial latent vector of size 512
 
-Trained models can be accessed here (Link will appear in near future).
+Trained models can be accessed here: [Google Drive](https://drive.google.com/file/d/1mbbjVw6uoSQI_8aIVZBOi6pi38QPRySt/view?usp=sharing)
 
 ### Results
 Generated 512x512 images:\
